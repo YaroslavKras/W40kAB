@@ -1,9 +1,12 @@
 package model.infantry;
 
+import model.Unit;
+import model.enums.Faction;
+
 /**
  * Created by Dask on 04.07.2015.
  */
-public abstract class AbstractInfantry {
+public abstract class AbstractInfantry implements Unit{
     private int weaponSkill;
     private int ballisticSkill;
     private int strength;
@@ -13,6 +16,7 @@ public abstract class AbstractInfantry {
     private int armourSave;
     private int leadership;
     private int ptsValue;
+    private Faction unitFaction;
 
     public AbstractInfantry(AbstractInfantryBuilder builder) {
         this.leadership = builder.leadership;
@@ -62,6 +66,9 @@ public abstract class AbstractInfantry {
         return leadership;
     }
 
+    public Faction getUnitFaction() {
+        return unitFaction;
+    }
 
     public static class AbstractInfantryBuilder <T extends AbstractInfantryBuilder>{
         private int weaponSkill;
@@ -73,6 +80,7 @@ public abstract class AbstractInfantry {
         private int armourSave;
         private int leadership;
         private int ptsValue;
+        private Faction faction;
 
         public T withWeaponSkill(int weaponSkill){
             this.weaponSkill = weaponSkill;
@@ -116,6 +124,11 @@ public abstract class AbstractInfantry {
         public T withPtsValue(int ptsValue){
             this.ptsValue = ptsValue;
             return (T)this;
+        }
+
+        public T withFaction(Faction faction){
+            this.faction = faction;
+            return (T) this;
         }
      }
 }

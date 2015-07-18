@@ -2,16 +2,13 @@ package model.infantry.spaceMarines;
 
 import model.enums.SpaceMarinesCodexType;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Dask on 04.07.2015.
  */
-public class SpaceMarineUnit extends AbstractSpaceMarineUnit {
+public class SpaceMarineInfantryUnit extends AbstractSpaceMarineUnit {
 
 
-    private SpaceMarineUnit(SpaceMarineBuilder builder) {
+    private SpaceMarineInfantryUnit(SpaceMarineBuilder builder) {
         super(builder);
     }
 
@@ -34,19 +31,8 @@ public class SpaceMarineUnit extends AbstractSpaceMarineUnit {
             return (SpaceMarineBuilder)createTacticalSpaceMarine().withAttacks(2).withLeadership(9);
         }
 
-        public List<SpaceMarineUnit> createTacticalSquad(){
-            List<SpaceMarineUnit> tacticalSquad = new ArrayList<SpaceMarineUnit>();
-            for (int i = 0; i < 5; i++) {
-                SpaceMarineUnit tacticalMarine = new SpaceMarineUnit(createTacticalSpaceMarine());
-                tacticalSquad.add(tacticalMarine);
-            }
-            SpaceMarineUnit tacticalMarineSergeant = new SpaceMarineUnit(createTacticalSpaceMarineSergeant());
-            tacticalSquad.add(tacticalMarineSergeant);
-            return tacticalSquad;
-        }
-
-        public SpaceMarineUnit build(){
-            return new SpaceMarineUnit(this);
+        public SpaceMarineInfantryUnit build(){
+            return new SpaceMarineInfantryUnit(this);
         }
     }
 }

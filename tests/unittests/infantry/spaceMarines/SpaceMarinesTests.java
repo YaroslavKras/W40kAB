@@ -1,7 +1,7 @@
 package unittests.infantry.spaceMarines;
 
 import model.enums.SpaceMarinesCodexType;
-import model.infantry.spaceMarines.SpaceMarineUnit;
+import model.infantry.spaceMarines.SpaceMarineInfantryUnit;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static junit.framework.Assert.*;
@@ -9,11 +9,11 @@ import static junit.framework.Assert.*;
  * Created by Dask on 16.07.2015.
  */
 public class SpaceMarinesTests {
-    private static SpaceMarineUnit sut;
+    private static SpaceMarineInfantryUnit sut;
 
     @BeforeClass
     public static void setUp(){
-        sut = new SpaceMarineUnit.SpaceMarineBuilder().createTacticalSpaceMarine().build();
+        sut = new SpaceMarineInfantryUnit.SpaceMarineBuilder().createTacticalSpaceMarine().build();
     }
 
     @Test
@@ -28,6 +28,7 @@ public class SpaceMarinesTests {
         assertEquals(4, sut.getStrength());
         assertEquals(4, sut.getToughness());
         assertEquals(1, sut.getAttacks());
+        assertEquals(1, sut.getWounds());
         assertEquals(3, sut.getArmourSave());
         assertEquals(8, sut.getLeadership());
         assertEquals(14, sut.getPtsValue());
@@ -36,7 +37,7 @@ public class SpaceMarinesTests {
 
     @Test
     public void testSergeantHasDifferentValues(){
-        sut = new SpaceMarineUnit.SpaceMarineBuilder().createTacticalSpaceMarineSergeant().build();
+        sut = new SpaceMarineInfantryUnit.SpaceMarineBuilder().createTacticalSpaceMarineSergeant().build();
         assertEquals(2, sut.getAttacks());
         assertEquals(9, sut.getLeadership());
     }
