@@ -17,25 +17,19 @@ import java.util.Map;
 public class SpaceMarinesRoster extends Roster {
     private SpaceMarineBuilder infantryBuilder = new SpaceMarineBuilder();
     private SpaceMarineInfantryUnit spaceMarineInfantryUnit;
-    private Map<Integer, List<? extends Unit>> unitEntries = new HashMap<Integer, List<? extends Unit>>();
-    private int entryNumber = 1;
+//    private Map<Integer, ArrayList<? extends Unit>> unitEntries = new HashMap<Integer, ArrayList<? extends Unit>>();
+//    private int entryNumber = 1;
 
     public SpaceMarinesRoster(int ptsLimit, FOKType fokType, Faction faction) {
         super(ptsLimit, fokType, faction);
-        spaceMarineInfantryUnit = infantryBuilder.build();
+        spaceMarineInfantryUnit = infantryBuilder.build(); //TODO What?
     }
 
-    private int getAndIncrementEntryNubmer(){
-        return entryNumber++;
-    }
 
-    public Map<Integer, List<? extends Unit>> getUnitEntries() {
+    public Map<Integer, ArrayList<? extends Unit>> getUnitEntries() {
         return unitEntries;
     }
 
-    private int getAndDecrementEntryNumber(){
-        return entryNumber--;
-    }
 
     private boolean valideUnitType(Unit unit){
         return unit.getUnitFaction() == Faction.SPACE_MARINES;
@@ -53,14 +47,10 @@ public class SpaceMarinesRoster extends Roster {
     }
 
     public List<SpaceMarineInfantryUnit> addTacticalMarine(int entryNumber){
-        List<SpaceMarineInfantryUnit> targetSquad = (List<SpaceMarineInfantryUnit>) unitEntries.get(entryNumber);
+        ArrayList<SpaceMarineInfantryUnit> targetSquad = (ArrayList<SpaceMarineInfantryUnit>) unitEntries.get(entryNumber);
         SpaceMarineInfantryUnit tacticalMarine = infantryBuilder.createTacticalSpaceMarine().build();
         targetSquad.add(tacticalMarine);
         return targetSquad;
     }
 
-    public void  addEntryToRoster(List<? extends Unit> newUnitEnty){
-        Integer currentEntryNumber = getAndIncrementEntryNubmer();
-        unitEntries.put(currentEntryNumber, newUnitEnty);
-    }
 }

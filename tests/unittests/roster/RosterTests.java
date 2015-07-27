@@ -9,6 +9,7 @@ import model.roster.SpaceMarinesRoster;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,13 +44,40 @@ public class RosterTests {
     @Test
     public void testSpaceMarinesRosterProperties(){
         SpaceMarinesRoster roster = sut.createNewRoster(100, FOKType.UNBOUND_ARMY, Faction.SPACE_MARINES);
-        roster.addEntryToRoster(roster.createTacticalSquad());
+        roster.addEntryToRoster((ArrayList<? extends Unit>) roster.createTacticalSquad());
         assertNotNull(roster);
-        Map<Integer, List<? extends Unit>> unitEntries = roster.getUnitEntries();
+        Map<Integer, ArrayList<? extends Unit>> unitEntries = roster.getUnitEntries();
         assertNotNull(unitEntries.get(1));
-        roster.addEntryToRoster(roster.createTacticalSquad());
+        roster.addEntryToRoster((ArrayList<? extends Unit>) roster.createTacticalSquad());
         roster.addTacticalMarine(2);
         assertTrue(unitEntries.get(1).size() < unitEntries.get(2).size());
         assertTrue(unitEntries.get(2).size() == 6);
+    }
+
+    @Test
+    public void testCorrectNumberOfEntriesCreated(){
+        SpaceMarinesRoster roster = sut.createNewRoster(100, FOKType.UNBOUND_ARMY, Faction.SPACE_MARINES);
+        roster.addEntryToRoster((ArrayList<? extends Unit>) roster.createTacticalSquad());
+        assertEquals(1, roster.getUnitEntries().size());
+        roster.addEntryToRoster((ArrayList<? extends Unit>) roster.createTacticalSquad());
+        assertEquals(2, roster.getUnitEntries().size());
+        assertEquals(3, roster.getNextEmptyEntryNumber());
+    }
+
+    @Test
+    public void testEntriesWillDecrementTheirNumberIfDeleteInTheMiddle(){
+        SpaceMarinesRoster roster = sut.createNewRoster(100, FOKType.UNBOUND_ARMY, Faction.SPACE_MARINES);
+        for (int i = 0; i < 10; i++) {
+            roster.addEntryToRoster((ArrayList<? extends Unit>) roster.createTacticalSquad());
+            for (int j = 0; j < i; j++) {
+                roster.addTacticalMarine(i);
+            }
+        }
+        assertEquals(10, roster.getUnitEntries().size());
+        assertEquals(11, roster.getNextEmptyEntryNumber());
+        roster.removeEntryFromRoster(7);
+        assertEquals(9, roster.getUnitEntries().size());
+        assertEquals(10, roster.getNextEmptyEntryNumber());
+
     }
 }

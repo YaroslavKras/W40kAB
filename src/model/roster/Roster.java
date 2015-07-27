@@ -1,7 +1,12 @@
 package model.roster;
 
-import model.enums.Faction;
+import model.Unit;
 import model.enums.FOKType;
+import model.enums.Faction;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Dask on 18.07.2015.
@@ -10,6 +15,8 @@ public class Roster {
     private int ptsLimit;
     private FOKType fokType;
     private Faction faction;
+    private int entryNumber = 1;
+    protected Map<Integer, ArrayList<? extends Unit>> unitEntries = new HashMap<Integer, ArrayList<? extends Unit>>();
 
     public Roster(int ptsLimit, FOKType fokType, Faction faction) {
         this.ptsLimit = ptsLimit;
@@ -41,7 +48,47 @@ public class Roster {
         this.faction = faction;
     }
 
+    public int getNextEmptyEntryNumber() {
+        return entryNumber;
+    }
 
+    private int getAndIncrementEntryNubmer(){
+        return entryNumber++;
+    }
+
+    private int getAndDecrementEntryNumber(){
+        return entryNumber--;
+    }
+
+    public void  addEntryToRoster(ArrayList<? extends Unit> newUnitEnty){
+        Integer currentEntryNumber = getAndIncrementEntryNubmer();
+        unitEntries.put(currentEntryNumber, newUnitEnty);
+    }
+
+    public void removeEntryFromRoster(int entryNumber){
+        if (entryNumber == unitEntries.size()){
+            unitEntries.remove(entryNumber);
+        } else if (entryNumber > 1 && entryNumber < unitEntries.size()){
+            int lastUpdated = entryNumber;
+            for (int key : unitEntries.keySet()){
+                if (key > entryNumber){
+                    if (key > lastUpdated) {
+                        ArrayList<? extends Unit> unit = unitEntries.get(key);
+                        unitEntries.replace(lastUpdated, unit);
+                        lastUpdated = key;
+                    } else {
+                        ArrayList<? extends Unit> unit = unitEntries.get(key);
+                        unitEntries.put(entryNumber, unit);
+                        lastUpdated = key;
+                    }
+                }
+                if (key == unitEntries.size()){
+                    unitEntries.remove(key);
+                }
+            }
+        }
+        getAndDecrementEntryNumber();
+    }
 
     public static <T extends Roster> T createNewRoster(int ptsLimit, FOKType type, Faction faction){
         switch (faction){
@@ -62,4 +109,6 @@ public class Roster {
         }
         throw new IllegalArgumentException("NOT SUPPORTED");
     }
+
+
 }
