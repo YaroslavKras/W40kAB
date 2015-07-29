@@ -2,6 +2,9 @@ package model.infantry;
 
 import model.Unit;
 import model.enums.Faction;
+import model.enums.SpaceMarinesWargearList;
+
+import java.util.ArrayList;
 
 /**
  * Created by Dask on 04.07.2015.
@@ -17,6 +20,7 @@ public abstract class AbstractInfantry implements Unit{
     private int leadership;
     private int ptsValue;
     private Faction unitFaction;
+    private ArrayList<SpaceMarinesWargearList> wargear;
 
     public AbstractInfantry(AbstractInfantryBuilder builder) {
         this.leadership = builder.leadership;
@@ -28,6 +32,8 @@ public abstract class AbstractInfantry implements Unit{
         this.ballisticSkill = builder.ballisticSkill;
         this.weaponSkill = builder.weaponSkill;
         this.ptsValue = builder.ptsValue;
+        this.unitFaction = builder.faction;
+        this.wargear = builder.wargear;
     }
 
     public int getWeaponSkill() {
@@ -70,6 +76,10 @@ public abstract class AbstractInfantry implements Unit{
         return unitFaction;
     }
 
+    public ArrayList<SpaceMarinesWargearList> getWargear() {
+        return wargear;
+    }
+
     public static class AbstractInfantryBuilder <T extends AbstractInfantryBuilder>{
         private int weaponSkill;
         private int ballisticSkill;
@@ -81,6 +91,7 @@ public abstract class AbstractInfantry implements Unit{
         private int leadership;
         private int ptsValue;
         private Faction faction;
+        private ArrayList<SpaceMarinesWargearList> wargear = new ArrayList<SpaceMarinesWargearList>();
 
         public T withWeaponSkill(int weaponSkill){
             this.weaponSkill = weaponSkill;
@@ -129,6 +140,16 @@ public abstract class AbstractInfantry implements Unit{
         public T withFaction(Faction faction){
             this.faction = faction;
             return (T) this;
+        }
+
+        public T withWargear(SpaceMarinesWargearList wargear){
+            this.wargear.add(wargear);
+            return (T) this;
+        }
+
+        public T withWargear(ArrayList<SpaceMarinesWargearList> wargear){
+            this.wargear.addAll(wargear);
+            return (T)this;
         }
      }
 }

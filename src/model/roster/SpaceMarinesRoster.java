@@ -3,11 +3,11 @@ package model.roster;
 import model.Unit;
 import model.enums.FOKType;
 import model.enums.Faction;
+import model.enums.SpaceMarinesWargearList;
 import model.infantry.spaceMarines.SpaceMarineInfantryUnit;
 import model.infantry.spaceMarines.SpaceMarineInfantryUnit.SpaceMarineBuilder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +51,14 @@ public class SpaceMarinesRoster extends Roster {
         SpaceMarineInfantryUnit tacticalMarine = infantryBuilder.createTacticalSpaceMarine().build();
         targetSquad.add(tacticalMarine);
         return targetSquad;
+    }
+
+    public SpaceMarineInfantryUnit addWargearToModel(SpaceMarineInfantryUnit unit, SpaceMarinesWargearList wargear){
+        int wargearPtsValue = wargear.getPtsValue();
+        int newPtsValue = unit.getPtsValue() + wargearPtsValue;
+        SpaceMarineInfantryUnit.SpaceMarineBuilder builder = SpaceMarineBuilder.copyModel(unit);
+        SpaceMarineBuilder infantryBuilder = (SpaceMarineBuilder) builder.withPtsValue(newPtsValue).withWargear(wargear);
+        return infantryBuilder.build();
     }
 
 }

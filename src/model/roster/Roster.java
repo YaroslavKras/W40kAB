@@ -60,12 +60,12 @@ public class Roster {
         return entryNumber--;
     }
 
-    public void  addEntryToRoster(ArrayList<? extends Unit> newUnitEnty){
+    public void addEntry(ArrayList<? extends Unit> newUnitEnty){
         Integer currentEntryNumber = getAndIncrementEntryNubmer();
         unitEntries.put(currentEntryNumber, newUnitEnty);
     }
 
-    public void removeEntryFromRoster(int entryNumber){
+    public void removeEntry(int entryNumber){
         if (entryNumber == unitEntries.size()){
             unitEntries.remove(entryNumber);
         } else if (entryNumber > 1 && entryNumber < unitEntries.size()){
