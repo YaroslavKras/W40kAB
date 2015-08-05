@@ -77,6 +77,5 @@ public class RosterTests {
         roster.removeEntry(7);
         assertEquals(9, roster.getUnitEntries().size());
         assertEquals(10, roster.getNextEmptyEntryNumber());
-
     }
 }

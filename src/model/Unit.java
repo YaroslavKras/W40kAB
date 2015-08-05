@@ -7,4 +7,6 @@ import model.enums.Faction;
  */
 public interface Unit {
     public Faction getUnitFaction();
+    public String getName();
+    public int getPtsValue();
 }

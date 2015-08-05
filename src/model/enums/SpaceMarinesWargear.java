@@ -1,17 +1,15 @@
 package model.enums;
 
-import com.sun.xml.internal.ws.api.server.SDDocument;
-
 /**
  * Created by Dask on 29.07.2015.
  */
-public enum  SpaceMarinesWargearList {
+public enum SpaceMarinesWargear {
     BOLT_PISTOL(0, "Boltpistol", WargearType.RANGED_WEAPON, SpecialRules.PISTOL),
     FRAG_GRENADES_DEFAULT(0, "Frag Grenades", WargearType.RANGED_WEAPON, SpecialRules.GRENADE),
     KRAK_GRENADES_DEFAULT(0, "Krak Grenades", WargearType.RANGED_WEAPON, SpecialRules.GRENADE),
     BOLTGUN(0, "Boltgun", WargearType.RANGED_WEAPON, SpecialRules.RAPID_FIRE),
     STORM_BOLTER(5, "Storm Bolter", WargearType.RANGED_WEAPON, SpecialRules.NO_SPECIAL_RULE),
-    COMBI_WEAPON(10, "Combi- weapon", WargearType.RANGED_WEAPON, SpecialRules.NO_SPECIAL_RULE),
+    COMBI_WEAPON(10, "Combi- weapon", WargearType.RANGED_WEAPON, SpecialRules.COMBI_WEAPON),
     GRAV_PISTOL(15, "Grav Pistol", WargearType.RANGED_WEAPON,SpecialRules.PISTOL, SpecialRules.GRAVITON),
     PLASMA_PISTOL(5, "Plasma Pistol", WargearType.RANGED_WEAPON, SpecialRules.PISTOL, SpecialRules.GETS_HOT),
     CHAINSWORD(0, "Chainsword", WargearType.MELEE_WEAPON, SpecialRules.NO_SPECIAL_RULE),
@@ -79,7 +77,7 @@ public enum  SpaceMarinesWargearList {
     private WargearType type;
     private SpecialRules specialRule[];
 
-    SpaceMarinesWargearList(int ptsValue, String name, WargearType type, SpecialRules ... specialRule) {
+    SpaceMarinesWargear(int ptsValue, String name, WargearType type, SpecialRules... specialRule) {
         this.ptsValue = ptsValue;
         this.name = name;
         this.type = type;
@@ -94,12 +92,16 @@ public enum  SpaceMarinesWargearList {
         return name;
     }
 
+    public SpecialRules[] getSpecialRule() {
+        return specialRule;
+    }
+
     public WargearType getType() {
         return type;
     }
 
-    public static SpaceMarinesWargearList getByName(String name){
-        for (SpaceMarinesWargearList wargear : values()){
+    public static SpaceMarinesWargear getByName(String name){
+        for (SpaceMarinesWargear wargear : values()){
             if (wargear.getName().toLowerCase().equals(name.toLowerCase())){
                 return wargear;
             }

@@ -2,7 +2,7 @@ package model.infantry;
 
 import model.Unit;
 import model.enums.Faction;
-import model.enums.SpaceMarinesWargearList;
+import model.enums.SpaceMarinesWargear;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * Created by Dask on 04.07.2015.
  */
 public abstract class AbstractInfantry implements Unit{
+    private String name;
     private int weaponSkill;
     private int ballisticSkill;
     private int strength;
@@ -20,9 +21,10 @@ public abstract class AbstractInfantry implements Unit{
     private int leadership;
     private int ptsValue;
     private Faction unitFaction;
-    private ArrayList<SpaceMarinesWargearList> wargear;
+    private ArrayList<SpaceMarinesWargear> wargear;
 
-    public AbstractInfantry(AbstractInfantryBuilder builder) {
+    public AbstractInfantry(AbstractInfantryBuilder<model.infantry.spaceMarines.AbstractSpaceMarineUnit.AbstractSpaceMarineBuilder> builder) {
+        this.name = builder.name;
         this.leadership = builder.leadership;
         this.armourSave = builder.armourSave;
         this.attacks = builder.attacks;
@@ -36,10 +38,16 @@ public abstract class AbstractInfantry implements Unit{
         this.wargear = builder.wargear;
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
     public int getWeaponSkill() {
         return weaponSkill;
     }
 
+    @Override
     public int getPtsValue() {
         return ptsValue;
     }
@@ -72,15 +80,17 @@ public abstract class AbstractInfantry implements Unit{
         return leadership;
     }
 
+    @Override
     public Faction getUnitFaction() {
         return unitFaction;
     }
 
-    public ArrayList<SpaceMarinesWargearList> getWargear() {
+    public ArrayList<SpaceMarinesWargear> getWargear() {
         return wargear;
     }
 
     public static class AbstractInfantryBuilder <T extends AbstractInfantryBuilder>{
+        private String name;
         private int weaponSkill;
         private int ballisticSkill;
         private int strength;
@@ -91,7 +101,12 @@ public abstract class AbstractInfantry implements Unit{
         private int leadership;
         private int ptsValue;
         private Faction faction;
-        private ArrayList<SpaceMarinesWargearList> wargear = new ArrayList<SpaceMarinesWargearList>();
+        private ArrayList<SpaceMarinesWargear> wargear = new ArrayList<SpaceMarinesWargear>();
+
+        public T withName(String name){
+            this.name = name;
+            return (T)this;
+        }
 
         public T withWeaponSkill(int weaponSkill){
             this.weaponSkill = weaponSkill;
@@ -142,12 +157,12 @@ public abstract class AbstractInfantry implements Unit{
             return (T) this;
         }
 
-        public T withWargear(SpaceMarinesWargearList wargear){
+        public T withWargear(SpaceMarinesWargear wargear){
             this.wargear.add(wargear);
             return (T) this;
         }
 
-        public T withWargear(ArrayList<SpaceMarinesWargearList> wargear){
+        public T withWargear(ArrayList<SpaceMarinesWargear> wargear){
             this.wargear.addAll(wargear);
             return (T)this;
         }

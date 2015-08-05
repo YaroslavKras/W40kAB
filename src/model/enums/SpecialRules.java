@@ -4,15 +4,15 @@ package model.enums;
  * Created by Dask on 29.07.2015.
  */
 public enum SpecialRules {
-    ONE("1", "One"),
-    TWO("2", "Two"),
-    THREE("3", "Three"),
-    FOUR("4", "Four"),
-    FIVE("5", "Five"),
-    SIX("6", "Six"),
-    SEVEN("7", "Seven"),
-    EIGHT("8", "Eight"),
-    NINE("9", "Nine"),
+    ONE("1", "Shot"),
+    TWO("2", "Shots"),
+    THREE("3", "Shots"),
+    FOUR("4", "Shots"),
+    FIVE("5", "Shots"),
+    SIX("6", "Shots"),
+    SEVEN("7", "Shots"),
+    EIGHT("8", "Shots"),
+    NINE("9", "Shots"),
     ACUTE_SENCES("Acute Sences", "If  a unit contains at least one model with this special rule,  and that unit arrives on a\n" +
             "random table edge (due to Outf lank,  or other special rules),  then you can re-roll to see\n" +
             "which table edge they arrive from."),
@@ -472,7 +472,8 @@ public enum SpecialRules {
             "In addition,  units containing one or more models with the Zealot special rule re-roll all\n" +
             "failed To Hit rolls during the f irst round of  each close combat – they do not get to re-roll\n" +
             "failed To Hit rolls in subsequent rounds."),
-    NO_SPECIAL_RULE("--", "No special rules");
+    NO_SPECIAL_RULE("--", "No special rules"),
+    COMBI_WEAPON("Combi-Weapon", "Depends on the chosen type of the weapon");
     private String name;
     private String description;
 

@@ -3,7 +3,7 @@ package model.roster;
 import model.Unit;
 import model.enums.FOKType;
 import model.enums.Faction;
-import model.enums.SpaceMarinesWargearList;
+import model.enums.SpaceMarinesWargear;
 import model.infantry.spaceMarines.SpaceMarineInfantryUnit;
 import model.infantry.spaceMarines.SpaceMarineInfantryUnit.SpaceMarineBuilder;
 
@@ -17,8 +17,6 @@ import java.util.Map;
 public class SpaceMarinesRoster extends Roster {
     private SpaceMarineBuilder infantryBuilder = new SpaceMarineBuilder();
     private SpaceMarineInfantryUnit spaceMarineInfantryUnit;
-//    private Map<Integer, ArrayList<? extends Unit>> unitEntries = new HashMap<Integer, ArrayList<? extends Unit>>();
-//    private int entryNumber = 1;
 
     public SpaceMarinesRoster(int ptsLimit, FOKType fokType, Faction faction) {
         super(ptsLimit, fokType, faction);
@@ -43,6 +41,7 @@ public class SpaceMarinesRoster extends Roster {
         }
         SpaceMarineInfantryUnit tacticalMarineSergeant = infantryBuilder.createTacticalSpaceMarineSergeant().build();
         tacticalSquad.add(tacticalMarineSergeant);
+        this.addEntry((ArrayList<? extends Unit>) tacticalSquad);
         return tacticalSquad;
     }
 
@@ -53,12 +52,30 @@ public class SpaceMarinesRoster extends Roster {
         return targetSquad;
     }
 
-    public SpaceMarineInfantryUnit addWargearToModel(SpaceMarineInfantryUnit unit, SpaceMarinesWargearList wargear){
+    public static SpaceMarineInfantryUnit addWargearToModel(SpaceMarineInfantryUnit unit, SpaceMarinesWargear wargear){
         int wargearPtsValue = wargear.getPtsValue();
         int newPtsValue = unit.getPtsValue() + wargearPtsValue;
         SpaceMarineInfantryUnit.SpaceMarineBuilder builder = SpaceMarineBuilder.copyModel(unit);
-        SpaceMarineBuilder infantryBuilder = (SpaceMarineBuilder) builder.withPtsValue(newPtsValue).withWargear(wargear);
-        return infantryBuilder.build();
+        builder = (SpaceMarineBuilder) builder.withPtsValue(newPtsValue).withWargear(wargear);
+        return builder.build();
     }
 
+    public static SpaceMarineInfantryUnit removeWargearFromModel(SpaceMarineInfantryUnit unit, SpaceMarinesWargear wargear){
+        int wargearPtsValue = wargear.getPtsValue();
+        int newPtsValue = unit.getPtsValue() - wargearPtsValue;
+        unit.getWargear().remove(wargear);
+        SpaceMarineInfantryUnit.SpaceMarineBuilder builder = SpaceMarineBuilder.copyModel(unit);
+        builder = (SpaceMarineBuilder) builder.withPtsValue(newPtsValue);
+        return builder.build();
+    }
+
+    public void printRoster(){
+        for (int entryNumber: unitEntries.keySet()){
+            ArrayList<? extends Unit> squad = unitEntries.get(entryNumber);
+            System.out.println("Squad " + entryNumber);
+            for (Unit unit : squad){
+                System.out.println("\t" + unit.getName());
+            }
+        }
+    }
 }
